@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<h1 class="text-center">Aktif Doktorlar</h1>
+<hr>
+
+{% if is_active_doctor %}
+<table id="meinemTisch" class="table text-center table-hover table-striped mt-1 text-center">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">İsim</th>
+        <th scope="col">Departman</th>
+        <th scope="col">Mesaj Gönder</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for doctor in active_doctors %}
+      <tr>
+        <th scope="row">{{ doctor.doctorID }}</th>
+        <td>{{ doctor.name }} {{ doctor.surname }}</td>
+        <td>{{ doctor.department }}</td>
+        <td><a href="{% url 'send_message' reciever_id=doctor.doctorID %}" class="btn btn-success">Mesaj Gönder</a></td>
+    </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+<h4>Aktif Doktor Yok</h4>
+{% endif %}
+{% endblock body %}
+
+

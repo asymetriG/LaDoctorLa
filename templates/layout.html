@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jacquard+12+Charted&family=Jacquard+24&display=swap" rel="stylesheet">
+
+    <title>Document</title>
+    <style>
+        .jacquard-24-regular {
+            font-family: "Jacquard 24", system-ui;
+            font-weight: 400;
+            font-style: normal;
+          }
+
+          .jacquard-12-charted-regular {
+            font-family: "Jacquard 12 Charted", system-ui;
+            font-weight: 400;
+            font-style: normal;
+          }
+          
+          .disapp {
+            opacity: 0;
+          }
+          
+        .rgform {
+            border-radius: 20px;
+        }
+        .porowrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-primary">
+    <div class="container-fluid justify-content-between">
+        <a class="navbar-brand" href="/">
+            <img src="{% static 'img/ladoctor/ladoctor-logo-zip-file/png/logo-no-background.png' %}" alt="" width="30" height="30" class="d-inline-block align-text-top">
+            LaDoctorla
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if "doctor_id" in request.session %}
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Hoşgeldiniz Bayım</a>
+                </li>
+                {% else %}
+                {% endif %}
+                
+                {% if 'patient_id' in request.session %}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Randevularım</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav mb-2 mb-lg-0 me-3">
+                {% if 'logged_in' in request.session %}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'active_doctors' %}">Aktif Doktorlar</a>
+                    </li>
+                    {% if 'doctor_id' in request.session %}
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'doctor_profile' %}">Doktor Paneli</a>
+                        </li>
+                        
+                    {% endif %}
+                    {% if 'patient_id' in request.session %}
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'get_appointment' %}">Randevu Al</a>
+                        </li>
+                    {% endif %}
+                    {% if 'admin_id' in request.session %}
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'dashboard' %}">Kontrol Paneli</a>
+                        </li>
+                    {% endif %}
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Çıkış Yap</a>
+                        </li>
+                    </ul>
+                {% else %}
+                    <li class="nav-item dropdown me-4">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Giriş Yap
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'user_login' %}">Kullanıcı Girişi</a></li>
+                            <li><a class="dropdown-item" href="{% url 'doctor_login' %}">Doktor Girişi</a></li>
+                            <li><a class="dropdown-item"href="{% url 'admin_login' %}">Admin Girişi</a></li>
+                        </ul>
+                    </li>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'user_register' %}">Kayıt ol</a>
+                        </li>
+                    </ul>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-xl mt-5">
+
+    {% if messages %}
+        {% for message in messages %}
+        {% if message.level == 50 %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% else %}
+        <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+        {% endif %}
+            
+        {% endfor %}
+    {% endif %}
+    
+    {% block body %}
+    
+    {% endblock body %}
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js"></script>
+{% block script %}
+
+{% endblock script %}
+</body>
+</html>

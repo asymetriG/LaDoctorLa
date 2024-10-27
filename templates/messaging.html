@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>Mesajlaşma</h1>
+<hr>
+{% if all_messages %}
+    {% for message in all_messages %}
+    <p>{{message.message_content}}</p>
+    {% endfor %}
+{% else %}
+{% endif %}
+{% endblock body %}

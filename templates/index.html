@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block body %}
+{% if "logged_in" in request.session %}
+
+{% else %}
+<section class="text-center mb-5">
+    <div class="container">
+      <h1 class="display-4 jacquard-24-regular">Willkommen Sie Zur Unserem Krankenhaus</h1>
+      <p class="lead">We are committed to providing the best healthcare services to our patients.</p>
+      {% comment %} <a href="#" class="btn btn-primary bruh">Learn More</a>
+      <a href="#" class="btn btn-primary bruh">Learn Less</a>
+      <a href="#" class="btn btn-primary bruh">Dont Learn</a> {% endcomment %}
+    </div>
+  </section>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <img src="{% static 'img/ladoctor/ladoctor-logo-zip-file/png/logo-no-background.png' %}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Hasta Girişi</h5>
+          <p class="card-text">Eğer hastaysan buraya tıkla. Hasta olanlar tedavi edilecek.</p>
+          <a href="{% url 'user_register' %}" class="btn btn-primary">Kayıt Ol</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+          <img src="{% static 'img/ladoctor/ladoctor-logo-zip-file/png/logo-no-background.png' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Doktor Girişi</h5>
+            <p class="card-text">Eğer hastanenin doktorsan buraya tıkla. Hastaları tedavi ediceksin.</p>
+            <a href="{% url 'doctor_login' %}" class="btn btn-primary">Giriş Yap</a>
+          </div>
+        </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <img src="{% static 'img/ladoctor/ladoctor-logo-zip-file/png/logo-no-background.png' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Admin Girişi</h5>
+        <p class="card-text">Admin misin sen kardeşim? O zaman hoşgeldin patron.</p>
+        <a href="{% url 'admin_login' %}" class="btn btn-primary">Giriş Yap</a>
+      </div>
+    </div>
+</div>
+</div>
+
+
+{% endif %}
+
+{% endblock body %}
+
+

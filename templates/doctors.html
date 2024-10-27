@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-12">
+        <h5 class="text-center">Tüm Doktorlar</h5>
+        <hr>
+        <table id="meinemTisch" class="table text-center table-hover table-striped mt-1 text-center">
+            <thead>
+              <tr>
+                <th onclick="sortTable(0)" scope="col">ID</th>
+                <th onclick="sortTable(1)" scope="col">İsim</th>
+                <th onclick="sortTable(2)" scope="col">Doğum Tarihi</th>
+                <th onclick="sortTable(3)" scope="col">Telefon</th>
+                <th onclick="sortTable(4)" scope="col">Adres</th>
+                <th onclick="sortTable(5)" scope="col">Departman</th>
+                <th scope="col">Verileri Düzenle</th>
+                <th scope="col">Doktoru Sil</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for doctor in doctors %}
+              <tr>
+                <th scope="row">{{ doctor.doctorID }}</th>
+                <td>{{ doctor.name }} {{ doctor.surname }}</td>
+                <td>{{ doctor.birthdate }}</td>
+                <td>{{ doctor.phone }}</td>
+                <td>{{ doctor.address }}</td>
+                <td>{{ doctor.department }}</td>
+                <td><a href="{% url 'edit_doctor' id=doctor.doctorID %}" class="btn btn-warning">Düzenle</a></td>
+                <td><a href="#" id="doctor_{{ doctor.doctorID }}" class="btn btn-danger">Sil</a></td>
+            </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+    
+</div>
+{% endblock body %}
+
+{% block script %}
+<script>
+
+  function sortTable(colIndex) {
+      var table = document.getElementById("meinemTisch");
+      var rows = table.rows;
+      var switching = true;
+    
+      while (switching) {
+        switching = false;
+        for (var i = 1; i < rows.length - 1; i++) {
+          var shouldSwitch = false;
+          var x = rows[i].getElementsByTagName("td")[colIndex];
+          var y = rows[i + 1].getElementsByTagName("td")[colIndex];
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+        if (shouldSwitch) {
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+        }
+      }
+    }
+  </script>
+
+{% endblock script %}

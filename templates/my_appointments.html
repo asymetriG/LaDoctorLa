@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% if appointments %}
+<div class="row">
+    <div class="col-md-9">
+        <h2>Randevularım</h2>
+        <hr>
+        <table id="meinemTisch" class="table text-center table-hover table-striped mt-1 text-center">
+            <thead>
+              <tr>
+                <th scope="col">Randevu ID</th>
+                <th scope="col">Randevu Tarihi</th>
+                <th scope="col">Doktor Adı</th>
+                <th scope="col">Departman</th>
+                <th scope="col">Onay Durumu</th>
+                <th scope="col">Raporu Görüntüle</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for app in appointments %}
+              <tr>
+                <th scope="row">{{app.appointmentID}}</th>
+                <td>{{app.appointment_date}} {{app.appointment_time}}</td>
+                <td>{{app.doctor.name}} {{app.doctor.surname}}</td>
+                <td>{{ app.doctor.department }}</td>
+                {% if app.granted %}
+                <td>Onaylandı</td>
+                {% else %}
+                <td>Henüz Onaylanmadı</td>
+                {% endif %}           
+                <td><a class="btn btn-warning" href="#">Detaylar</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+</div> 
+
+{% else %}
+
+{% endif %}
+
+{% endblock body %}
+

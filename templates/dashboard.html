@@ -1,0 +1,87 @@
+{% extends "layout.html" %} 
+{% block body %}
+<div class="row">
+    <div class="col-md-9">
+        <h5 class="text-center">Doktorlar</h5>
+        <hr>
+        <table id="meinemTisch" class="table text-center table-hover table-striped mt-1 text-center">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">İsim</th>
+              <th scope="col">Doğum Tarihi</th>
+              <th scope="col">Telefon</th>
+              <th scope="col">Adres</th>
+              <th scope="col">Departman</th>
+              <th scope="col">Verileri Düzenle</th>
+              <th scope="col">Doktoru Sil</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for doctor in data %}
+              <tr>
+                  <th scope="row">{{ doctor.doctorID }}</th>
+                  <td>{{ doctor.name }} {{ doctor.surname }}</td>
+                  <td>{{ doctor.birthdate }}</td>
+                  <td>{{ doctor.phone }}</td>
+                  <td>{{ doctor.address }}</td>
+                  <td>{{ doctor.department }}</td>
+                  <td><a href="{% url 'edit_doctor' id=doctor.doctorID %}" class="btn btn-warning">Düzenle</a></td>
+                  <td><a href="{% url 'doctor_delete' id=doctor.doctorID %}" id="doctor_{{ doctor.doctorID }}" class="btn btn-danger">Sil</a></td>
+              </tr>
+              {% endfor %}
+              
+              
+          </tbody>
+        </table>
+        {% if mt == True %}
+              <div class="alert alert-info">6'dan fazla doktor var. Hepsini görüntülemek için <a class="link-offset-2 link-underline link-underline-opacity-0" href="{% url 'doctors' %}">buraya</a> basınız</div> 
+              {% else %}
+              {% endif %}
+          <div class="row mb-5">
+            <div class="col-md-6">
+              <a style="width:100%" class="btn btn-success" href="{% url 'doctor_register' %}">Doktor Ekle</a>
+            </div>
+            <div class="col-md-6">
+              <a style="width:100%" class="btn btn-primary" href="{% url 'doctors' %}">Tüm Doktorları Görüntüle</a>
+            </div>
+          </div>
+          
+    </div>
+    <div class="col-md-3">
+      <h5 class="text-center">Adminler</h5>
+      <hr>
+      <table id="meinemTisch" class="table text-center table-hover table-striped mt-1 text-center">
+        <thead>
+          <tr>
+            <th scope="col">Admin ID</th>
+            <th scope="col">İsim</th>
+            <th scope="col">Telefon</th>
+            <th scope="col">Admini  Sil</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for admin in admins %}
+            <tr>
+                <th scope="row">{{ admin.adminID }}</th>
+                <td>{{ admin.name }}</td>
+                <td>{{ admin.phone }}</td>
+                <td><a href="{% url 'admin_delete' id=admin.adminID %}" id="" class="btn btn-danger">Sil</a></td>
+            </tr>
+            {% endfor %}
+            
+        </tbody>
+      </table>
+      <a style="width:100%" class="btn btn-success" href="{% url 'admin_register' %}">Admin Ekle</a>
+    </div>
+</div>
+
+{% endblock body %}
+
+{% block script %}
+<script>//new DataTable("#meinemTisch");</script>
+
+
+{% endblock script %}
+
+
